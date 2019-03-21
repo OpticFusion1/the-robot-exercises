@@ -13,6 +13,11 @@ public class isogram {
         // TODO
         // Look to see if 2 characters are the same in a string.
         //
+        String test1 = "Happy";
+        String test2 = "Podiversery";
+        String test3 = "Counterdiaglyph";
+        String test4 = "UNCOPYRIGHTABLE";
+
         String strToLowerCase = str.toLowerCase();
         //Ignoring letter case by making it all lowercase characters.
         for (int i = 0; i < strToLowerCase.length(); i++)
@@ -30,9 +35,50 @@ public class isogram {
         return true;
 
     }
-    //TODO
-//Testing done on CodeWars site but need to write a test to show verification of successful test.
-    public static void main(String[] args) {
-        System.out.println();
+
+//Testing done on CodeWars site
+}
+/* CodeWars Solutions:
+
+Shortest solution suggested:
+public static boolean  isIsogram(String str) {
+    return str.length() == str.toLowerCase().chars().distinct().count();
+
+Another solution:
+
+public class isogram {
+    public static boolean  isIsogram(String str) {
+        str = str.toLowerCase();
+        for(char ch : str.toCharArray()){
+            if(str.indexOf(ch) != str.lastIndexOf(ch)) return false;
+        }
+        return true;
     }
 }
+
+Solution that is similiar to my solution:
+
+public class isogram {
+  public static boolean isIsogram(String str) {
+
+    if (str.equals("")) {
+      return true;
+    }
+
+    str = str.toLowerCase();
+    char[] arr = str.toCharArray();
+
+    for (int i = 0; i < arr.length; i++) {
+      for (int x = 0; x < i; x++) {
+        if (arr[i] == arr[x]) {
+        return false;
+        }
+      }
+    }
+    return true;
+  }
+
+}
+
+
+    */
