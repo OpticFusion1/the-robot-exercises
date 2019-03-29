@@ -26,6 +26,7 @@ public class HeroRPG {
     warrior.setWarrior(false);
     mage.setHealth(22);
     mage.setMage(false);
+    //both classes set to false
 
     chooseSpec();
     selectDifficulty();
@@ -93,10 +94,6 @@ public class HeroRPG {
         System.out.println("I can teach you a few prayers to aid you along the way.");
         System.out.println("** " + Bowie.getName() + " has learned the spell SHIELD");
         System.out.println("** " + Bowie.getName() + " has learned the spell BOOST");
-//        Bowie.setPriest(true);
-//        Bowie.setAttack(3);
-//        Bowie.setPotionStrength(5);
-//        Bowie.setPotionNum(7);
     }
 
     private static void selectDifficulty(){
@@ -170,7 +167,7 @@ public class HeroRPG {
     }
 
     private static void visitMarket(){
-        System.out.println("*** " + Bowie.getName() + " finds himself in town.  There are a number of shops to choose from. ***");
+        System.out.println("*** " + Bowie.getName() + " finds them self in town.  There are a number of shops to choose from. ***");
         System.out.println("|***| Potion Shop |**| Weapon Shop |**| Inn |**|");
         System.out.println("You may also leave town.  Where would you like to go?");
 /**visit potion shop **/
@@ -330,7 +327,6 @@ public class HeroRPG {
         System.out.println("REST ** LEAVE");
         String innChoice = scanner.nextLine();
         if (innChoice.startsWith("R") || innChoice.startsWith("r")) {
-            System.out.println("Come and lay down.  A hero like you needs all the rest they can get.  Do not worry about payment.");
             System.out.println("ZZZ");
             System.out.println("ZZZZZZZZ");
             Bowie.setHealth(25);
