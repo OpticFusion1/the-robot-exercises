@@ -4,68 +4,124 @@ import java.util.Scanner;
 public class HeroRPG {
     public static Scanner scanner = new Scanner(System.in);
     private static Hero Bowie = new Hero("Bowie", 20, 2, 2, 3, 100, false, false);
-    public static Enemy Monster = new Enemy(20, 5);
+    public  static Enemy Monster = new Enemy("Troll", 20, 5, 8, 5);
     public static void main(String[] args) {
 
 
-        boolean gameInPlay = true;
-        do{
-            System.out.println("Hello, hero!  Welcome to Arcadia.  What do I have the pleasure of calling you?");
-            Bowie.setHeroName(scanner.nextLine());
-            System.out.println("hmm.. " + Bowie.getHeroName() + ". That is an interesting name, but what is a name after all?");
-            System.out.println("Anyway, Arcadia can use all the heroes it can find!  We need a brave hero to take on the monsters around the town!");
-            System.out.println("I hope we can count on you!");
+//        boolean gameInPlay = true;
+//        do{
+//            System.out.println("Hello, hero!  Welcome to Arcadia.  What do I have the pleasure of calling you?");
+//            Bowie.setHeroName(scanner.nextLine());
+//            System.out.println("hmm.. " + Bowie.getHeroName() + ". That is an interesting name, but what is a name after all?");
+//            System.out.println("Anyway, Arcadia can use all the heroes it can find!  We need a brave hero to take on the monsters around the town!");
+//            System.out.println("I hope we can count on you!");
+            nameHero();
 /** Hero Difficulty **/
             selectDifficulty();
-            System.out.println("Excellent! Now, let's get you properly equipped.  What is your preferred study of the arts?  Warrior or Mage?");
-            String heroSpec = scanner.nextLine();
-/** Warrior Spec **/
-            if (heroSpec.startsWith("W") || heroSpec.startsWith("w")) {
-                specWarrior();
+//            System.out.println("Excellent! Now, let's get you properly equipped.  What is your preferred study of the arts?  Warrior or Mage?");
+//            String heroSpec = scanner.nextLine();
+///** Warrior Spec **/
+//            if (heroSpec.startsWith("W") || heroSpec.startsWith("w")) {
+//                specWarrior();
+//
+///** Mage Spec **/
+//            }else if (heroSpec.startsWith("M") || heroSpec.startsWith("m")) {
+//                specMage();
+//            }
+            chooseSpec();
 
-/** Mage Spec **/
-            }else if (heroSpec.startsWith("M") || heroSpec.startsWith("m")) {
-                specMage();
-            }
-            getHeroRecap();
+//            System.out.println("Here are some gold coins to get you started around town.");
+//            System.out.println("** " + Bowie.getHeroName() + " received " + Bowie.getGoldPoint() + " gold coins. **");
 
-            System.out.println("Are you ready to continue?");
-            System.out.println("CONTINUE *** START OVER");
-            String leaveArea = scanner.nextLine();
-            if (leaveArea.startsWith("C") || leaveArea.startsWith("c")) {
-                System.out.println("*** " + Bowie.getHeroName() + " has left the castle of Arcadia ***");
+            checkStats();
 
-                visitMarket();
+            System.out.println("Now that you are ready, you can explore the town and hopefully save Arcadia!");
+            System.out.println("Good Luck " + Bowie.getHeroName() + "!");
 
-            } else if (leaveArea.startsWith("S") || leaveArea.startsWith("s")) {
-                System.out.println("Let's give this another try");
-            }
+//            System.out.println("Are you ready to continue?");
+//            System.out.println("CONTINUE *** START OVER");
+//            String leaveArea = scanner.nextLine();
+//            if (leaveArea.startsWith("C") || leaveArea.startsWith("c")) {
+//                System.out.println("*** " + Bowie.getHeroName() + " has left the castle of Arcadia ***");
+//
+//                visitMarket();
+//
+//            } else if (leaveArea.startsWith("S") || leaveArea.startsWith("s")) {
+//                System.out.println("Let's give this another try");
+//            }
 
-        }while(gameInPlay); //game is currently always in play
+            startOver();
+
+//        }while(gameInPlay);
+        //game is currently always in play
 
     } /** THIS IS THE MAIN **/
 
 
+private static void redoHero(){
+//    Character Bowie = new Character();
+//    Bowie.setMage(false);
+//    Bowie.setWarrior(false);
+//    Bowie.setHeroHealth(20);
+//    Bowie.setPotionCount(3);
+    nameHero();
+    selectDifficulty();
+    chooseSpec();
+    checkStats();
+    startOver();
+
+}
+
+    private static void nameHero(){
+        System.out.println("Hello, hero!  Welcome to Arcadia.  What do I have the pleasure of calling you?");
+        Bowie.setHeroName(scanner.nextLine());
+        System.out.println("hmm.. " + Bowie.getHeroName() + ". That is an interesting name, but what is a name after all?");
+        System.out.println("Anyway, Arcadia can use all the heroes it can find!  We need a brave hero to take on the monsters around the town!");
+        System.out.println("I hope we can count on you!");
+//        selectDifficulty();
+    }
+
     private static void selectDifficulty(){
+
         System.out.println("To get started how strong do you think you are? The Strongest|Pretty Strong|Not Strong (difficulty level)");
         String heroStrength = scanner.nextLine();
         if (heroStrength.startsWith("T") || heroStrength.startsWith("t")){
-            Bowie.setHeroHealth(Bowie.getHeroHealth() - 10);
+            Bowie.setHeroHealth(10);
         } else if (heroStrength.startsWith("P") || heroStrength.startsWith("p")) {
-            Bowie.setHeroHealth(Bowie.getHeroHealth() - 5);
+            Bowie.setHeroHealth(20);
+        }else if (heroStrength.startsWith("N") || heroStrength.startsWith("n")){
+            Bowie.setHeroHealth(25);
         }
     }
 
+    private static void chooseSpec(){
+        System.out.println("Excellent! Now, let's get you properly equipped.  What is your preferred study of the arts?  Warrior or Mage?");
+        String heroSpec = scanner.nextLine();
+/** Warrior Spec **/
+        if (heroSpec.startsWith("W") || heroSpec.startsWith("w")) {
+            specWarrior();
+
+/** Mage Spec **/
+        }else if (heroSpec.startsWith("M") || heroSpec.startsWith("m")) {
+            specMage();
+        }
+    }
+
+
+
+
     private static void specWarrior(){
-            System.out.println("Ah.  A warrior.  I should have known from your huge battle axe.  Let's get you something a little nicer though.");
-            System.out.println("** " + Bowie.getHeroName() + " has received the Hero's Axe **");
-            System.out.println("** Attack has increased from " + Bowie.getHeroAttack() + " to 5");
-            System.out.println("Here are a few potions to help you as well");
-            System.out.println("** " + Bowie.getHeroName() + " has received " + Bowie.getPotionCount() + " potions ***");
-            Bowie.setWarrior(true);
-            Bowie.setHeroAttack(5);
-            Bowie.setHeroPotion(4);
-            Bowie.setHeroHealth(25);
+        System.out.println("Ah.  A warrior.  I should have known from your huge battle axe.  Let's get you something a little nicer though.");
+        System.out.println("** " + Bowie.getHeroName() + " has received the Hero's Axe **");
+        System.out.println("** Attack has increased from " + Bowie.getHeroAttack() + " to 5");
+        System.out.println("Here are a few potions to help you as well");
+        System.out.println("** " + Bowie.getHeroName() + " has received " + Bowie.getPotionCount() + " potions ***");
+        System.out.println("Here are a few gold coins to get you started");
+        System.out.println("** " + Bowie.getHeroName() + " received " + Bowie.getGoldPoint() + " gold coins. **");
+        Bowie.setWarrior(true);
+        Bowie.setHeroAttack(5);
+        Bowie.setHeroPotion(4);
+        Bowie.setHeroHealth(25);
     }
 
     private static void specMage(){
@@ -75,27 +131,79 @@ public class HeroRPG {
         System.out.println("You also have the knowledge to use these more potent Health Potions");
         System.out.println("** " + Bowie.getHeroName() + " has received the ability to use Mage Health Potions **");
         System.out.println("** " + Bowie.getHeroName() + " received 2 extra potions **");
+        System.out.println("Here are a few gold coins to get you started");
+        System.out.println("** " + Bowie.getHeroName() + " received " + Bowie.getGoldPoint() + " gold coins. **");
         Bowie.setMage(true);
         Bowie.setHeroAttack(3);
         Bowie.setHeroPotion(5);
         Bowie.setPotionCount(7);
+        //return mage
+
+//        Hero mage = new Hero(Bowie.getHeroName(),20, 3, 5, 7, 100, false, true);
+//        mage = Bowie;
+
+
+
+
     }
 
-    private static void getHeroRecap(){
-        System.out.println("Here are some gold coins to get you started around town.");
-        System.out.println("** " + Bowie.getHeroName() + " received " + Bowie.getGoldPoint() + " gold coins. **");
-        System.out.println();
+    private static void specPriest(){
+//        System.out.println("A priest, of course, how pious.  Take this staff to aid in your journey.");
+//        System.out.println("** " + Bowie.getHeroName() + " has received the Hero's Staff **");
+//        System.out.println("** Attack has increased from " + Bowie.getHeroAttack() + " to 3");
+//        System.out.println("I can teach you a few prayers to aid you along the way.");
+//        System.out.println("** " + Bowie.getHeroName() + " has learned the spell SHIELD");
+//        System.out.println("** " + Bowie.getHeroName() + " has learned the spell BOOST");
+//        Bowie.setPriest(true);
+//        Bowie.setHeroAttack(3);
+//        Bowie.setHeroPotion(5);
+//        Bowie.setPotionCount(7);
+    }
 
-        System.out.println("Perfect!  Let's take a look at you!");
+    private static void checkStats(){
+        System.out.println();
         System.out.println("Your health is currently: " + Bowie.getHeroHealth());
         System.out.println("You have a damage amount of " + Bowie.getHeroAttack());
         System.out.println("You currently have " + Bowie.getPotionCount() + " potions");
         System.out.println("You currently have " + Bowie.getGoldPoint() + " gold coins");
-
         System.out.println();
-        System.out.println("Now that you are ready, you can explore the town and hopefully save Arcadia!");
-        System.out.println("Good Luck " + Bowie.getHeroName() + "!");
     }
+
+    private static void startOver(){
+        System.out.println("Are you ready to continue?");
+        System.out.println("CONTINUE *** START OVER");
+        String leaveArea = scanner.nextLine();
+        if (leaveArea.startsWith("C") || leaveArea.startsWith("c")) {
+            System.out.println("*** " + Bowie.getHeroName() + " has left the castle of Arcadia ***");
+
+            visitMarket();
+
+        } else if (leaveArea.startsWith("S") || leaveArea.startsWith("s")) {
+            System.out.println("Let's give this another try");
+            redoHero();
+        }
+    }
+
+
+
+    private static void getHeroRecap(){
+//        System.out.println("Here are some gold coins to get you started around town.");
+//        System.out.println("** " + Bowie.getHeroName() + " received " + Bowie.getGoldPoint() + " gold coins. **");
+//        System.out.println();
+//
+//        System.out.println("Perfect!  Let's take a look at you!");
+//        System.out.println("Your health is currently: " + Bowie.getHeroHealth());
+//        System.out.println("You have a damage amount of " + Bowie.getHeroAttack());
+//        System.out.println("You currently have " + Bowie.getPotionCount() + " potions");
+//        System.out.println("You currently have " + Bowie.getGoldPoint() + " gold coins");
+//
+//        System.out.println();
+//        System.out.println("Now that you are ready, you can explore the town and hopefully save Arcadia!");
+//        System.out.println("Good Luck " + Bowie.getHeroName() + "!");
+    }
+
+
+
 
     private static void visitMarket(){
         System.out.println("*** " + Bowie.getHeroName() + " finds himself in town.  There are a number of shops to choose from. ***");
@@ -103,17 +211,17 @@ public class HeroRPG {
         System.out.println("You may also leave town.  Where would you like to go?");
 /**visit potion shop **/
         String heroChoice = scanner.nextLine();
-        if (heroChoice.startsWith("P") || heroChoice.equalsIgnoreCase("p")) {
+        if (heroChoice.startsWith("P") || heroChoice.startsWith("p")) {
             System.out.println("Welcome to the Potion Shop!");
             System.out.println("We have a number of options when it comes to potions.");
             visitPotionShop();
 /**visit weapon shop **/
-        } else if (heroChoice.startsWith("W") || heroChoice.equalsIgnoreCase("w")) {
+        } else if (heroChoice.startsWith("W") || heroChoice.startsWith("w")) {
             System.out.println("Welcome to the Weapon Shop!");
             System.out.println("We have plenty of things you can use for stabbing.");
             visitWeaponShop();
 /** visit Inn **/
-        } else if (heroChoice.startsWith("I") || heroChoice.equalsIgnoreCase("INN")) {
+        } else if (heroChoice.startsWith("I") || heroChoice.startsWith("i")) {
             visitInn();
         }
         enterCave();
@@ -139,7 +247,7 @@ public class HeroRPG {
         System.out.println("Ah! Great! How many potions are you wanting to buy?");
         System.out.println("1 Potion = 3GP *** 3 Potions = 6GP *** Nevermind");
         String potionBuy = scanner.nextLine();
-        if (potionBuy.startsWith("1 Potion") || potionBuy.equalsIgnoreCase("1 potion")) {
+        if (potionBuy.startsWith("1")){
             if (Bowie.getGoldPoint() >= 3) {
                 Bowie.setPotionCount(Bowie.getPotionCount() + 1);
                 Bowie.setGoldPoint(Bowie.getGoldPoint() - 3);
@@ -148,7 +256,7 @@ public class HeroRPG {
             } else if (Bowie.getGoldPoint() < 3) {
                 System.out.println("It looks as though you don't have enough money. I have kids to feed!");
             }
-        } else if (potionBuy.startsWith("3 Potions") || potionBuy.equalsIgnoreCase("3 potions")) {
+        } else if (potionBuy.startsWith("3")) {
             if (Bowie.getGoldPoint() >= 6) {
                 Bowie.setPotionCount(Bowie.getPotionCount() + 3);
                 Bowie.setGoldPoint(Bowie.getGoldPoint() - 6);
@@ -157,7 +265,7 @@ public class HeroRPG {
             } else if (Bowie.getGoldPoint() < 6) {
                 System.out.println("It looks as though you don't have enough money. I have kids to feed!");
             }
-        } else if (potionBuy.startsWith("N") || potionBuy.equalsIgnoreCase("nevermind")) {
+        } else if (potionBuy.startsWith("N") || potionBuy.startsWith("n")) {
             System.out.println("Aw! Maybe next time");
 
         }
@@ -168,7 +276,7 @@ public class HeroRPG {
         System.out.println("What do you have to sell?");
         System.out.println("1 Potion = 2GP ** 3 Potions ** 6GP ** Nevermind");
         String potionSell = scanner.nextLine();
-        if (potionSell.startsWith("1 Potion") || potionSell.equalsIgnoreCase("1 potion")) {
+        if (potionSell.startsWith("1")) {
             if (Bowie.getPotionCount() >= 1) {
                 Bowie.setGoldPoint(Bowie.getGoldPoint() + 2);
                 Bowie.setPotionCount(Bowie.getPotionCount() - 1);
@@ -177,14 +285,14 @@ public class HeroRPG {
             } else if (Bowie.getPotionCount() < 1) {
                 System.out.println("Hey! What are you trying to pull.  You don't have any potions!");
             }
-        } else if (potionSell.startsWith("3 Potions") || potionSell.equalsIgnoreCase("3 potions")) {
+        }else if (potionSell.startsWith("3")) {
             if (Bowie.getPotionCount() >= 3) {
                 Bowie.setGoldPoint(Bowie.getGoldPoint() + 6);
                 Bowie.setPotionCount(Bowie.getPotionCount() - 3);
                 System.out.println("Hey thanks!  Here is your money");
                 System.out.println("** " + Bowie.getHeroName() + " received 6GP.  You now have a total of " + Bowie.getGoldPoint() + " gold coins and " + Bowie.getPotionCount() + " potions. **");
             }
-        } else if (potionSell.startsWith("N") || potionSell.startsWith("n")) {
+        }else if (potionSell.startsWith("N") || potionSell.startsWith("n")) {
             System.out.println("Aw! Maybe next time");
         }
         visitPotionShop();
@@ -195,14 +303,14 @@ public class HeroRPG {
         System.out.println("BUY ** SELL ** LEAVE");
         String weaponChoice = scanner.nextLine();
 
-        if (weaponChoice.startsWith("Buy") || weaponChoice.startsWith("buy")) {
+        if (weaponChoice.startsWith("B") || weaponChoice.startsWith("b")) {
             buyWeapons();
 
-        } else if (weaponChoice.startsWith("Sell") || weaponChoice.equalsIgnoreCase("sell")) {
+        } else if (weaponChoice.startsWith("S") || weaponChoice.startsWith("s")) {
             System.out.println("We are currently unable to buy items.  Check back soon!");
             visitWeaponShop();
 
-        } else if (weaponChoice.startsWith("Leave") || weaponChoice.equalsIgnoreCase("leave")) {
+        } else if (weaponChoice.startsWith("L") || weaponChoice.startsWith("l")) {
             visitMarket();
         }
 
@@ -210,33 +318,55 @@ public class HeroRPG {
 
     private static void buyWeapons(){
         System.out.println("Ah! Here is our selection of wonderful killing devices.");
-        System.out.println("Double Sided Battle Axe = 15GP (+5 Attack) *** Magical Magic Stick of Magic = 15GP (+3 Attack & +5 Health) ** Nevermind");
+        System.out.println("Warriors Double Sided Battle Axe = 15GP (+5 Attack)");
+        System.out.println("Magical Magic Stick of Magic = 15GP (+3 Attack & +5 Health)");
+        System.out.println("Nevermind");
         String weaponBuy = scanner.nextLine();
-        if (weaponBuy.startsWith("D") || weaponBuy.startsWith("d")) {
+        if (weaponBuy.startsWith("W") || weaponBuy.startsWith("w")) {
             if (Bowie.getGoldPoint() >= 15 && Bowie.isWarrior()) {
-                Bowie.setHeroAttack(8);
-                Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
+                receiveWarriorAxe();
                 System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
-                System.out.println("** " + Bowie.getHeroName() + " now has a Double Sided Battle Axe.  Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
+//                Bowie.setHeroAttack(8);
+//                Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
+//                System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
+//                System.out.println("** " + Bowie.getHeroName() + " now has a Double Sided Battle Axe.  Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
             } else if (Bowie.getGoldPoint() < 15 || !Bowie.isWarrior()) {
                 System.out.println("I'm afraid you are unable to handle this weapon.");
             }
-        } else if (weaponBuy.startsWith("M") || weaponBuy.equalsIgnoreCase("m")) {
+        } else if (weaponBuy.startsWith("M") || weaponBuy.startsWith("m")) {
             if (Bowie.getGoldPoint() >= 15 && Bowie.isMage()) {
-                Bowie.setHeroAttack(6);
-                Bowie.setHeroHealth(25);
-                Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
                 System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
-                System.out.println("** " + Bowie.getHeroName() + " received the Magical Magic Stick of Magic. **");
-                System.out.println("** Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
-                System.out.println("** " + Bowie.getHeroName() + "'s health is now at " + Bowie.getHeroHealth() + " **");
+                receiveMageStaff();
+//                Bowie.setHeroAttack(6);
+//                Bowie.setHeroHealth(25);
+//                Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
+//                System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
+//                System.out.println("** " + Bowie.getHeroName() + " received the Magical Magic Stick of Magic. **");
+//                System.out.println("** Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
+//                System.out.println("** " + Bowie.getHeroName() + "'s health is now at " + Bowie.getHeroHealth() + " **");
             } else if (Bowie.getGoldPoint() < 15 || !Bowie.isMage()) {
                 System.out.println("I'm afraid you cannot handle this weapon.");
             }
-        } else if (weaponBuy.startsWith("N") || weaponBuy.equalsIgnoreCase("nevermind")) {
+        } else if (weaponBuy.startsWith("N") || weaponBuy.startsWith("n")) {
             System.out.println("Aw! Maybe next time");
         }
         visitWeaponShop();
+    }
+
+    private static void receiveMageStaff(){
+        Bowie.setHeroAttack(6);
+        Bowie.setHeroHealth(25);
+        Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
+        System.out.println("** " + Bowie.getHeroName() + " received the Magical Magic Stick of Magic. **");
+        System.out.println("** Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
+        System.out.println("** " + Bowie.getHeroName() + "'s health is now at " + Bowie.getHeroHealth() + " **");
+    }
+
+    private static void receiveWarriorAxe(){
+        Bowie.setHeroAttack(8);
+        Bowie.setGoldPoint(Bowie.getGoldPoint() - 15);
+        System.out.println("** " + Bowie.getHeroName() + " now has a Double Sided Battle Axe.  " +
+                "Attack Damage is now: " + Bowie.getHeroAttack() + ". You have a total of " + Bowie.getGoldPoint() + " gold coins. **");
     }
 
     private static void visitInn(){
@@ -260,7 +390,7 @@ public class HeroRPG {
         System.out.println("Eventually he comes across a cave guarded by troll.");
         System.out.println("With no other way around and not the brightest when it comes to riddles " + Bowie.getHeroName() + " figures he better try to kill the troll to get across.");
         System.out.println();
-        battleMonster(); //if rebattling monster health does not change.
+        battleMonster();
     }
 
     private static void battleMonster(){
@@ -297,7 +427,8 @@ public class HeroRPG {
             System.out.println("Enemy health is still at " + Monster.getEnemyHealth());
         }
         checkHealth();
-        enemyAttack();
+        enemyHeal();
+
     }
 
     private static void usePotion(){
@@ -314,7 +445,7 @@ public class HeroRPG {
             System.out.println("You are out of potions!");
             System.out.println("The enemies health is at " + Monster.getEnemyHealth());
         }
-        battleMonster();
+        enemyHeal();
     }
 
     private static void enemyAttack(){
@@ -337,10 +468,24 @@ public class HeroRPG {
         battleMonster();
     }
 
+    private static void enemyHeal(){
+        if (Monster.getEnemyHealth() <= 10 && Monster.getEnemypotionCount() > 0) {
+            Monster.setEnemypotionCount(Monster.getEnemypotionCount() - 1);
+            Monster.setEnemyHealth(Monster.getEnemyHealth() + Monster.getEnemyPotion());
+            System.out.println();
+            System.out.println(Monster.getEnemyName() + " used heal.");
+            System.out.println(Monster.getEnemyName() + " has been healed for " + Monster.getEnemyPotion());
+            System.out.println(Monster.getEnemyName() + "'s health is now at " + Monster.getEnemyHealth());
+            battleMonster();
+        } else if (Monster.getEnemyHealth() > 10 || Monster.getEnemypotionCount() == 0){
+            enemyAttack();
+        }
+    }
+
     private static void checkHealth(){
         if (Bowie.getHeroHealth() <= 0) {
             System.out.println(Bowie.getHeroName() + " has been defeated!");
-            System.out.println("GAME OVER");
+//            System.out.println("GAME OVER");
             Bowie.setHeroHealth(25);
             visitInn();
         }else if(Monster.getEnemyHealth() <= 0){

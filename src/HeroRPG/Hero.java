@@ -10,7 +10,7 @@ public class Hero {
     private boolean warrior;
     private boolean mage;
 
-
+//if not static create an instance of the class.  no static if you want to interact with object. exp, health, goldpoint.
 
     public Hero(String name, int health, int attack, int potionStrength, int numPotions, int goldPoint, boolean warrior, boolean mage){
         this.heroName = name;
@@ -22,6 +22,19 @@ public class Hero {
         this.warrior = warrior;
         this.mage = mage;
     }
+
+//    public Hero(){
+//        this.heroName = "Bowie";
+//        this.heroHealth = 25;
+//        this.heroAttack = 2;
+//        this.heroPotion = potionStrength;
+//        this.potionCount = numPotions;
+//        this.goldPoint = goldPoint;
+//        this.warrior = warrior;
+//        this.mage = mage;
+//    }
+
+
 
     public String getHeroName() {
         return heroName;
