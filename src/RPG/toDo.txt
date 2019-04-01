@@ -1,0 +1,13 @@
+
+
+fix start over to reset character completely.
+how to loop back to battle when running away/dying.
+
+add an inventory
+add a flash light to the shop
+use flash light for the cave
+
+finish mage, warrior and priest class
+
+
+
