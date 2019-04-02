@@ -66,7 +66,7 @@ public class HeroRPG {
 
     } /** THIS IS THE END OF MAIN **/
 
-    private static void giveRiddles(Character chooseClass){
+    static void giveRiddles(Character chooseClass){
         Scanner riddleAnswer = new Scanner(System.in);
         System.out.println("Voiceless is cries,");
         System.out.println("Wingless flutters,");
@@ -116,7 +116,7 @@ public class HeroRPG {
         }
     }
 
-    public static void playRiddle(String riddleChoice, Character chooseClass){
+    static void playRiddle(String riddleChoice, Character chooseClass){
         if(riddleChoice.startsWith("y") || riddleChoice.startsWith("Y")){
             giveRiddles(chooseClass);
         }else {
@@ -125,7 +125,7 @@ public class HeroRPG {
         }
     }
 
-    public static void exploreTown(Character chooseClass) {
+    static void exploreTown(Character chooseClass) {
     System.out.println("There are number of shops within town.  Which shop would you like to visit?");
     System.out.println("|***| Potion Shop |***|");
     System.out.println("|***| Weapon Shop |***|");
@@ -134,7 +134,7 @@ public class HeroRPG {
     visitShop(chooseClass);
 }
 
-    public static String visitShop(Character chooseClass){
+    static String visitShop(Character chooseClass){
             Scanner readShopChoice = new Scanner(System.in);
             String shopChoice = readShopChoice.nextLine();
 /**visit potion shop **/
@@ -157,7 +157,7 @@ public class HeroRPG {
         return shopChoice;
 }
 
-    public static String visitPotionShop(Character chooseClass){
+    static String visitPotionShop(Character chooseClass){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What would you like to do?.");
         System.out.println("BUY ** SELL ** LEAVE");
@@ -176,7 +176,7 @@ public class HeroRPG {
         return potionChoice;
     }
 
-    public static void buyPotions(Character chooseClass) {
+    static void buyPotions(Character chooseClass) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many potions are you wanting to buy?");
         System.out.println("1 Potion = 3GP *** 3 Potions = 6GP *** Nevermind");
@@ -209,7 +209,7 @@ public class HeroRPG {
         }
     }
 
-    public static String visitWeaponShop(Character chooseClass){
+    static String visitWeaponShop(Character chooseClass){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What do you want?");
         System.out.println("BUY ** SELL ** LEAVE");
@@ -227,7 +227,7 @@ public class HeroRPG {
         return weaponChoice;
     }
 
-    public static String visitInn(Character chooseClass){
+    static String visitInn(Character chooseClass){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What would you like to do?");
         System.out.println("REST ** LEAVE");
@@ -240,7 +240,7 @@ public class HeroRPG {
         return innChoice;
     }
 
-    public static void inspectSelf(Character chooseDifficulty) {
+    static void inspectSelf(Character chooseDifficulty) {
         System.out.println("Your max health is " + chooseDifficulty.getMaxHealth());
         System.out.println("Your health is currently: " + chooseDifficulty.getHealth());
         System.out.println("You have a damage amount of " + chooseDifficulty.getAttack());
@@ -248,7 +248,7 @@ public class HeroRPG {
         System.out.println("You currently have " + chooseDifficulty.getCurrency() + " gold coins");
     }
 
-    public static Character chooseDifficulty(String userDifficulty, Character chooseClass) {
+    static Character chooseDifficulty(String userDifficulty, Character chooseClass) {
         if (userDifficulty.startsWith("H") || userDifficulty.startsWith("h")) {
             chooseClass.setMaxHealth(chooseClass.getMaxHealth() - 10);
             chooseClass.setHealth(chooseClass.getHealth() - 10);
@@ -262,7 +262,7 @@ public class HeroRPG {
 
     }
 
-    public static Character chooseClass(String userRole, String userName) {
+    static Character chooseClass(String userRole, String userName) {
         if(userRole.startsWith("M") || userRole.startsWith("m")){
             return new Mage(userName);
         }else if(userRole.startsWith("W") || userRole.startsWith("w")) {
