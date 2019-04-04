@@ -1,5 +1,7 @@
 package RPG;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static RPG.Enemy.enemyAttack;
@@ -7,102 +9,120 @@ import static RPG.Enemy.enemyHeal;
 import static RPG.HeroRPG.*;
 
 public class Warrior extends Character {
+    private List<String> inventory;
     private boolean warrior;
 
 
     public Warrior(String name) {
-        super(name, 25, 25, 6, 3, 5, 25);
+        super(name, 25, 25, 6, 5, 25);
+        this.inventory = new ArrayList<>();
         this.warrior = true;
     }
 
 
     @Override
-    public int usePotion(Character chooseClass) {
-        if (this.getHealth() < 20 && this.getPotionNum() > 0) {
-            this.setPotionNum(this.getPotionNum() - 1);
+    public int countPotion() {
+        int potionNum = 0;
+        for(int i = 0; i < this.inventory.size(); i++){
+            if (this.inventory.contains("health potion")) {
+                potionNum++;
+            }
+        }
+        return potionNum;
+    }
+
+    @Override
+    public int usePotion(Character chooseDifficulty) {
+        if (this.getHealth() < chooseDifficulty.getMaxHealth() && this.inventory.contains("health potion")) {
+//            this.setPotionNum(this.getPotionNum() - 1);
+            this.inventory.remove("health potion");
             this.setHealth(this.getHealth() + this.getPotionStrength());
             System.out.println(this.getName() + " drank a health potion. Health has increased by " + this.getPotionStrength() + ". Health is now at " + this.getHealth());
-            System.out.println("You now have " + this.getPotionNum() + " left.");
+            System.out.println("You now have " + countPotion() + " left.");
             System.out.println("The enemies health is at " + Enemy.getHealth());
-            enemyHeal(chooseClass);
-        } else if (this.getHealth() == 100) {
+            enemyHeal(chooseDifficulty);
+        } else if (this.getHealth() == chooseDifficulty.getMaxHealth() && this.inventory.contains("health potion")) {
             System.out.println("You may want to slow down on those potions, you are already at " + this.getHealth() + " health.");
             System.out.println("The enemies health is at " + Enemy.getHealth());
-            battleChoices(chooseClass);
-        } else if (this.getPotionNum() == 0) {
+            battleChoices(chooseDifficulty);
+        } else if (!this.inventory.contains("health potion")) {
             System.out.println("You are out of potions!");
             System.out.println("The enemies health is at " + Enemy.getHealth());
-            battleChoices(chooseClass);
+            battleChoices(chooseDifficulty);
         }
         return this.getHealth();
     }
 
     @Override
-    public int sellPotions(Character chooseClass) {
+    public int sellPotions(Character chooseDifficulty) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("What do you have to sell?");
         System.out.println("1 Potion = 2GP ** 3 Potions ** 6GP ** Nevermind");
         String potionSell = scanner.nextLine();
         if (potionSell.startsWith("1")) {
-            if (this.getPotionNum() >= 1) {
+            if (this.inventory.contains("health potion")){
                 this.setCurrency(this.getCurrency() + 2);
-                this.setPotionNum(this.getPotionNum() - 1);
+                this.inventory.remove("health potion");
                 System.out.println("Hey thanks!  Here is your money");
-                System.out.println("** " + this.getName() + " received 2GP.  You now have a total of: " + this.getCurrency() + " gold coins and " + this.getPotionNum() + " potions. **");
-                sellPotions(chooseClass);
-            } else if (this.getPotionNum() < 1) {
+                System.out.println("** " + this.getName() + " received 2GP.  You now have a total of " + this.getCurrency() + " gold coins and " + countPotion() + " potions. **");
+                sellPotions(chooseDifficulty);
+            } else if (!this.inventory.contains("health potion")) {
                 System.out.println("Hey! What are you trying to pull.  You don't have any potions!");
-                sellPotions(chooseClass);
+                sellPotions(chooseDifficulty);
             }
         }else if (potionSell.startsWith("3")) {
-            if (this.getPotionNum() >= 3) {
+            if (countPotion() >= 3) {
                 this.setCurrency(super.getCurrency() + 6);
-                this.setPotionNum(this.getPotionNum() - 3);
+                for(int i = 0; i < 3; i++) {
+                    this.inventory.remove("health potion");
+                }
                 System.out.println("Hey thanks!  Here is your money");
-                System.out.println("** " + this.getName() + " received 6GP.  You now have a total of " + this.getCurrency() + " gold coins and " + this.getPotionNum() + " potions. **");
-                sellPotions(chooseClass);
+                System.out.println("** " + this.getName() + " received 6GP.  You now have a total of " + this.getCurrency() + " gold coins and " + countPotion() + " potions. **");
+                sellPotions(chooseDifficulty);
             }
         }else if (potionSell.startsWith("N") || potionSell.startsWith("n")) {
             System.out.println("Aw! Maybe next time");
-            visitPotionShop(chooseClass);
+            visitPotionShop(chooseDifficulty);
         }
-        return this.getPotionNum();
+        return countPotion();
     }
 
     @Override
-    public int buyPotions(Character chooseClass) {
+    public int buyPotions(Character chooseDifficulty) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many potions are you wanting to buy?");
         System.out.println("1 Potion = 3GP *** 3 Potions = 6GP *** Nevermind");
         String potionBuy = scanner.nextLine();
         if (potionBuy.startsWith("1")){
             if (this.getCurrency() >= 3) {
-                this.setPotionNum(this.getPotionNum() + 1);
+                this.inventory.add("health potion");
                 this.setCurrency(this.getCurrency() - 3);
                 System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
-                System.out.println("** " + this.getName() + " now has " + this.getPotionNum() + " potions and " + this.getCurrency() + " gold coins. **");
-                buyPotions(chooseClass);
+                System.out.println("** " + this.getName() + " now has " + countPotion() + " potions and " + this.getCurrency() + " gold coins. **");
+                buyPotions(chooseDifficulty);
             } else if (this.getCurrency() < 3) {
                 System.out.println("It looks as though you don't have enough money.");
-                buyPotions(chooseClass);
+                buyPotions(chooseDifficulty);
             }
 
         } else if (potionBuy.startsWith("3")) {
             if (this.getCurrency() >= 6) {
-                this.setPotionNum(this.getPotionNum() + 3);
+                for(int i = 0; i <= 3; i++) {
+                    this.inventory.add("health potion");
+                }
                 this.setCurrency(this.getCurrency() - 6);
                 System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
-                System.out.println("** " + this.getName() + " now has " + this.getPotionNum() + " potions and " + this.getCurrency() + " gold coins. **");
-                buyPotions(chooseClass);
+                System.out.println("** " + this.getName() + " now has " + countPotion() + " potions and " + this.getCurrency() + " gold coins. **");
+                buyPotions(chooseDifficulty);
             } else if (this.getCurrency() < 6) {
                 System.out.println("It looks as though you don't have enough money. I have kids to feed!");
-                buyPotions(chooseClass);
+                buyPotions(chooseDifficulty);
             }
         } else if (potionBuy.startsWith("N") || potionBuy.startsWith("n")) {
             System.out.println("Aw! Maybe next time");
-            visitPotionShop(chooseClass);
+            visitPotionShop(chooseDifficulty);
         }
-        return this.getPotionNum();
+        return countPotion();
     }
 
     @Override
@@ -110,32 +130,8 @@ public class Warrior extends Character {
         return "Currently unavailable";
     }
 
-    @Override
-    public int buyWeapons(Character chooseClass) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ah! Here is our selection of wonderful killing devices.");
-        System.out.println("Warriors Double Sided Battle Axe = 15GP (+5 Attack)");
-        System.out.println("Magical Magic Stick of Magic = 15GP (+3 Attack & +5 Health)");
-        System.out.println("Nevermind");
-        String weaponBuy = scanner.nextLine();
-        if (weaponBuy.startsWith("M") || weaponBuy.startsWith("m")) {
-            System.out.println("I'm afraid you are unable to handle this weapon.");
-            visitWeaponShop(chooseClass);
-        }else if (weaponBuy.startsWith("W") || weaponBuy.startsWith("w")) {
-            if (this.getCurrency() >= 15) {
-                System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
-                receiveWarriorAxe();
-                visitWeaponShop(chooseClass);
-            } else if (this.getCurrency() < 15) {
-                System.out.println("You are too poor for this right now.");
-                visitWeaponShop(chooseClass);
-            }
-        } else if (weaponBuy.startsWith("N") || weaponBuy.startsWith("n")) {
-            System.out.println("Aw! Maybe next time");
-            visitWeaponShop(chooseClass);
-        }
-        return this.getAttack();
-    }
+
+
 
     @Override
     public int rest(Character chooseClass) {
@@ -173,7 +169,7 @@ public class Warrior extends Character {
     @Override
     public int lootEnemy() {
         int randomNum = (int) (Math.random() * 6);
-        if (randomNum == 1 || randomNum == 3) {
+        if (randomNum == 1 || randomNum == 3 || randomNum == 5) {
             System.out.println("** Enemy has dropped 3 Gold **");
             System.out.println();
             this.setCurrency(this.getCurrency() + 3);
@@ -182,7 +178,8 @@ public class Warrior extends Character {
             System.out.println();
             this.setCurrency(this.getCurrency() + 5);
         } else if (randomNum == 0) {
-            System.out.println("** Enemy has dropped NEW ITEM **");
+            System.out.println("** Enemy has dropped a health potion **");
+            this.inventory.add("health potion");
             System.out.println();
         }
         return this.getHealth();
@@ -229,10 +226,35 @@ public class Warrior extends Character {
         return battleChoice;
     }
 
+    @Override
+    public int buyWeapons(Character chooseDifficulty) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ah! Here is our selection of wonderful killing devices.");
+        System.out.println("Warriors Double Sided Battle Axe = 15GP (+5 Attack)");
+        System.out.println("Magical Magic Stick of Magic = 15GP (+3 Attack & +5 Health)");
+        System.out.println("Nevermind");
+        String weaponBuy = scanner.nextLine();
+        if (weaponBuy.startsWith("M") || weaponBuy.startsWith("m")) {
+            System.out.println("I'm afraid you are unable to handle this weapon.");
+            visitWeaponShop(chooseDifficulty);
+        }else if (weaponBuy.startsWith("W") || weaponBuy.startsWith("w")) {
+            if (this.getCurrency() >= 15) {
+                System.out.println("Great! Here you are.  Careful with that!  Make sure to put out plenty of eyes.");
+                receiveWarriorAxe();
+                visitWeaponShop(chooseDifficulty);
+            } else if (this.getCurrency() < 15) {
+                System.out.println("You are too poor for this right now.");
+                visitWeaponShop(chooseDifficulty);
+            }
+        } else if (weaponBuy.startsWith("N") || weaponBuy.startsWith("n")) {
+            System.out.println("Aw! Maybe next time");
+            visitWeaponShop(chooseDifficulty);
+        }
+        return this.getAttack();
+    }
 
 
-
-        private int receiveWarriorAxe(){
+    private int receiveWarriorAxe(){
         this.setAttack(8);
         this.setCurrency(this.getCurrency() - 15);
         System.out.println("** " + this.getName() + " now has a Double Sided Battle Axe.  " +

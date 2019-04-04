@@ -1,4 +1,6 @@
 package RPG;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HeroRPG {
@@ -14,7 +16,8 @@ public class HeroRPG {
 
             Scanner readRole = new Scanner(System.in);
             System.out.println(userName + "..hmm");
-            System.out.println("Interesting name.  Well, I'm sure we can find a way to make it rhyme in an epic song if you succeed.");
+            System.out.println("Interesting name.  Well, I'm sure we can find a way to make it rhyme in an epic song.... if you succeed.");
+            System.out.println();
             System.out.println("What is your desired field of study?");
             System.out.println("|**| Mage |**| Warrior |**|");
             String userRole = readRole.nextLine();
@@ -23,6 +26,7 @@ public class HeroRPG {
 
             Scanner readDifficulty = new Scanner(System.in);
             System.out.println("Perfect!  Now, how skilled would you say you are? (difficulty level)");
+            System.out.println();
             System.out.println("The most skilled, give me a challenge. (Hard)");
             System.out.println("I am willing to be slightly annoyed. (Medium)");
             System.out.println("I need a boost in my self esteem, please. (Easy)");
@@ -30,13 +34,24 @@ public class HeroRPG {
             chooseDifficulty(userDifficulty, chooseClass(userRole, userName));
             System.out.println();
 
-            System.out.println("All right.  Let's take a look at you.");
-            inspectSelf(chooseDifficulty(userDifficulty, chooseClass(userRole,userName)));
-            System.out.println();
+
+
+
+
+
+//        chooseDifficulty(userDifficulty, chooseClass(userRole, userName)).receive3Potions();
+//        System.out.println("*** " + userName + " received " + chooseDifficulty(userDifficulty, chooseClass(userRole, userName)).countPotion() + " potions");
+
+        System.out.println("All right.  Let's take a look at you.");
+        System.out.println();
+
+        inspectSelf(chooseDifficulty(userDifficulty, chooseClass(userRole,userName)));
+        System.out.println();
 
 //            Scanner readRedo = new Scanner(System.in);
-            System.out.println("Wonderful!  I think you are ready to begin your journey.");
-//            System.out.println("Did you want to start over?");
+        System.out.println("Wonderful!  I think you are ready to begin your journey.");
+        System.out.println();
+        //            System.out.println("Did you want to start over?");
 //            System.out.println("Y/N");
 //            String userRedo = readRedo.nextLine();
 //            if(userRedo.startsWith("N") || userRedo.startsWith("n")){
@@ -44,31 +59,44 @@ public class HeroRPG {
 //            }
 //
 //        }while(redoHero);
+        System.out.println("Be sure to buy some potions and check out the weapon shop!");
+        System.out.println();
+        System.out.println();
 
         System.out.println("** Welcome to Arcadia! **");
         exploreTown(chooseDifficulty(userDifficulty, chooseClass(userRole,userName)));
-
-        Enemy troll = new Enemy("Troll",25, 25, 5, 3, 5);
-        Scanner playRiddle = new Scanner(System.in);
         System.out.println("***" + userName + " leaves town ***");
         System.out.println("***" + userName + " comes across a cave guarded by troll.");
-        System.out.println("Troll: Greetings, hero!  I see you are wanting to pass through this cave.");
-        System.out.println("Troll: If you can answer three riddles correctly, then I will let you pass.");
-        System.out.println("Troll: If you fail, however, then I eat you.");
-        System.out.println("Troll: Deal?");
-        System.out.println("Y/N");
-        String riddleChoice = playRiddle.nextLine();
-        playRiddle(riddleChoice, chooseClass(userRole, userName));
-        System.out.println();
+        Enemy.battleTroll(chooseDifficulty(userDifficulty, chooseClass(userRole,userName)));
+//        if(giveRiddles(chooseDifficulty(userDifficulty,chooseClass(,userName,userRole))).contains("flashlight")){
+            //add flashlight to inventory if you figure out riddles.
+//        }
+
+//        Enemy troll = new Enemy("Troll",25, 25, 5, 3, 5);
+//        Scanner playRiddle = new Scanner(System.in);
+//        System.out.println("***" + userName + " leaves town ***");
+//        System.out.println("***" + userName + " comes across a cave guarded by troll.");
+//        System.out.println("Troll: Greetings, hero!  I see you are wanting to pass through this cave.");
+//        System.out.println("Troll: If you can answer three riddles correctly, then I will let you pass.");
+//        System.out.println("Troll: If you fail, however, then I eat you.");
+//        System.out.println("Troll: Deal?");
+//        System.out.println("Y/N");
+//        String riddleChoice = playRiddle.nextLine();
+//        playRiddle(riddleChoice, chooseClass(userRole, userName));
+//        System.out.println();
+
+
+
+
 
 
 
 
     } /** THIS IS THE END OF MAIN **/
 
-    static void giveRiddles(Character chooseClass){
+    static String giveRiddles(Character chooseDifficulty){
         Scanner riddleAnswer = new Scanner(System.in);
-        System.out.println("Voiceless is cries,");
+        System.out.println("Voiceless it cries,");
         System.out.println("Wingless flutters,");
         System.out.println("Toothless bites,");
         System.out.println("Mouthless mutters.");
@@ -96,146 +124,150 @@ public class HeroRPG {
                         System.out.println("Troll: .....");
                         System.out.println("Troll: ... someone is quite the reader.  All right.  Time to kill you.  I'm afraid I lied..");
                         System.out.println("Troll: Can't have someone so good at riddles roaming the land.");
-                        chooseClass.battleChoices(chooseClass);
+                        chooseDifficulty.battleChoices(chooseDifficulty);
                     }else{
                         System.out.println("Troll: You should really read the classics, you tricksy hero");
-                        chooseClass.battleChoices(chooseClass);
+//                        return "flashlight";
+                        chooseDifficulty.battleChoices(chooseDifficulty);
                     }
                 }else{
                     System.out.println("Troll: I'm afraid you are wrong.  This is going to be a good fight");
-                    chooseClass.battleChoices(chooseClass);
+                    chooseDifficulty.battleChoices(chooseDifficulty);
                 }
             }else{
                 System.out.println("Troll: So close.  This is going to be fun.");
-               chooseClass.battleChoices(chooseClass);
+               chooseDifficulty.battleChoices(chooseDifficulty);
             }
 
         }else{
             System.out.println("Troll: Aw, that's a shame.  Looks like you are wrong.  Get ready to die, dummy");
-            chooseClass.battleChoices(chooseClass);
+            chooseDifficulty.battleChoices(chooseDifficulty);
         }
+       return "loser";
     }
 
-    static void playRiddle(String riddleChoice, Character chooseClass){
-        if(riddleChoice.startsWith("y") || riddleChoice.startsWith("Y")){
-            giveRiddles(chooseClass);
-        }else {
-            System.out.println("Troll: Aw you are no fun.  Killing you will be fun.");
-            chooseClass.battleChoices(chooseClass);
-        }
-    }
+//    static void playRiddle(String riddleChoice, Character chooseClass){
+//        if(riddleChoice.startsWith("y") || riddleChoice.startsWith("Y")){
+//            giveRiddles(chooseClass);
+//        }else {
+//            System.out.println("Troll: Aw you are no fun.  Killing you will be fun.");
+//            chooseClass.battleChoices(chooseClass);
+//        }
+//    }
 
-    static void exploreTown(Character chooseClass) {
+    static void exploreTown(Character chooseDifficulty) {
     System.out.println("There are number of shops within town.  Which shop would you like to visit?");
     System.out.println("|***| Potion Shop |***|");
     System.out.println("|***| Weapon Shop |***|");
     System.out.println("|***|     Inn     |***|");
     System.out.println("|***|  Leave Town |***|");
-    visitShop(chooseClass);
+    visitShop(chooseDifficulty);
 }
 
-    static String visitShop(Character chooseClass){
+    static String visitShop(Character chooseDifficulty){
             Scanner readShopChoice = new Scanner(System.in);
             String shopChoice = readShopChoice.nextLine();
 /**visit potion shop **/
         if (shopChoice.startsWith("P") || shopChoice.startsWith("p")) {
             System.out.println("Welcome to the Potion Shop!");
             System.out.println("We have a number of options when it comes to potions.");
-            return visitPotionShop(chooseClass);
+            return visitPotionShop(chooseDifficulty);
 /**visit weapon shop **/
         } else if (shopChoice.startsWith("W") || shopChoice.startsWith("w")) {
             System.out.println("Welcome to the Weapon Shop!");
             System.out.println("We have plenty of things you can use for stabbing.");
-            return visitWeaponShop(chooseClass);
+            return visitWeaponShop(chooseDifficulty);
 /** visit Inn **/
         } else if (shopChoice.startsWith("I") || shopChoice.startsWith("i")) {
-            System.out.println("Welcome to the Inn, wary hero!");
-            System.out.println("Please take some time to rest. There is no charge");
-            return visitInn(chooseClass);
+            return visitInn(chooseDifficulty);
+        }else{
+            Enemy.battleTroll(chooseDifficulty);
         }
 
         return shopChoice;
 }
 
-    static String visitPotionShop(Character chooseClass){
+    static String visitPotionShop(Character chooseDifficulty){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What would you like to do?.");
         System.out.println("BUY ** SELL ** LEAVE");
         String potionChoice = scanner.nextLine();
 
         if (potionChoice.startsWith("B") || potionChoice.startsWith("b")) {
-            buyPotions(chooseClass);
+            chooseDifficulty.buyPotions(chooseDifficulty);
 
         }else if (potionChoice.startsWith("S") || potionChoice.startsWith("s")) {
-            chooseClass.sellPotions(chooseClass);
+            chooseDifficulty.sellPotions(chooseDifficulty);
 
         } else if (potionChoice.startsWith("L") || potionChoice.startsWith("l")) {
-            exploreTown(chooseClass);
+            exploreTown(chooseDifficulty);
         }
 
         return potionChoice;
     }
 
-    static void buyPotions(Character chooseClass) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("How many potions are you wanting to buy?");
-        System.out.println("1 Potion = 3GP *** 3 Potions = 6GP *** Nevermind");
-        String potionBuy = scanner.nextLine();
-        if (potionBuy.startsWith("1")){
-            if (chooseClass.getCurrency() >= 3) {
-                chooseClass.setPotionNum(chooseClass.getPotionNum() + 1);
-                chooseClass.setCurrency(chooseClass.getCurrency() - 3);
-                System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
-                System.out.println("** " + chooseClass.getName() + " now has " + chooseClass.getPotionNum() + " potions and " + chooseClass.getCurrency() + " gold coins. **");
-                buyPotions(chooseClass);
-            } else if (chooseClass.getCurrency() < 3) {
-                System.out.println("It looks as though you don't have enough money.");
-                visitPotionShop(chooseClass);
-            }
-        } else if (potionBuy.startsWith("3")) {
-            if (chooseClass.getCurrency() >= 6) {
-                chooseClass.setPotionNum(chooseClass.getPotionNum() + 3);
-                chooseClass.setCurrency(chooseClass.getCurrency() - 6);
-                System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
-                System.out.println("** " + chooseClass.getName() + " now has " + chooseClass.getPotionNum() + " potions and " + chooseClass.getCurrency() + " gold coins. **");
-                buyPotions(chooseClass);
-            } else if (chooseClass.getCurrency() < 6) {
-                System.out.println("It looks as though you don't have enough money.");
-                visitPotionShop(chooseClass);
-            }
-        } else if (potionBuy.startsWith("N") || potionBuy.startsWith("n")) {
-            System.out.println("Aw! Maybe next time");
-            visitPotionShop(chooseClass);
-        }
-    }
+//    static void buyPotions(Character chooseClass) {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("How many potions are you wanting to buy?");
+//        System.out.println("1 Potion = 3GP *** 3 Potions = 6GP *** Nevermind");
+//        String potionBuy = scanner.nextLine();
+//        if (potionBuy.startsWith("1")){
+//            if (chooseClass.getCurrency() >= 3) {
+//                chooseClass.setPotionNum(chooseClass.getPotionNum() + 1); chooseClass.countPotion();
+//                chooseClass.setCurrency(chooseClass.getCurrency() - 3);
+//                System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
+//                System.out.println("** " + chooseClass.getName() + " now has " + chooseClass.getPotionNum() + " potions and " + chooseClass.getCurrency() + " gold coins. **");
+//                buyPotions(chooseClass);
+//            } else if (chooseClass.getCurrency() < 3) {
+//                System.out.println("It looks as though you don't have enough money.");
+//                visitPotionShop(chooseClass);
+//            }
+//        } else if (potionBuy.startsWith("3")) {
+//            if (chooseClass.getCurrency() >= 6) {
+//                chooseClass.setPotionNum(chooseClass.getPotionNum() + 3);
+//                chooseClass.setCurrency(chooseClass.getCurrency() - 6);
+//                System.out.println("Great! Here you are.  Good luck with those! Hopefully you won't need them.");
+//                System.out.println("** " + chooseClass.getName() + " now has " + chooseClass.getPotionNum() + " potions and " + chooseClass.getCurrency() + " gold coins. **");
+//                buyPotions(chooseClass);
+//            } else if (chooseClass.getCurrency() < 6) {
+//                System.out.println("It looks as though you don't have enough money.");
+//                visitPotionShop(chooseClass);
+//            }
+//        } else if (potionBuy.startsWith("N") || potionBuy.startsWith("n")) {
+//            System.out.println("Aw! Maybe next time");
+//            visitPotionShop(chooseClass);
+//        }
+//    }
 
-    static String visitWeaponShop(Character chooseClass){
+    static String visitWeaponShop(Character chooseDifficulty){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What do you want?");
         System.out.println("BUY ** SELL ** LEAVE");
         String weaponChoice = scanner.nextLine();
         if (weaponChoice.startsWith("B") || weaponChoice.startsWith("b")) {
-            chooseClass.buyWeapons(chooseClass);
+            chooseDifficulty.buyWeapons(chooseDifficulty);
 
         } else if (weaponChoice.startsWith("S") || weaponChoice.startsWith("s")) {
             System.out.println("We are currently unable to buy items.  Check back soon!");
-            visitWeaponShop(chooseClass);
+            visitWeaponShop(chooseDifficulty);
 
         } else if (weaponChoice.startsWith("L") || weaponChoice.startsWith("l")) {
-            exploreTown(chooseClass);
+            exploreTown(chooseDifficulty);
         }
         return weaponChoice;
     }
-
-    static String visitInn(Character chooseClass){
+//move this to mage to show updated magic power
+    static String visitInn(Character chooseDifficulty){
+        System.out.println("Welcome to the Inn, wary hero!");
+        System.out.println("Please take some time to rest. There is no charge");
         Scanner scanner = new Scanner(System.in);
         System.out.println("What would you like to do?");
         System.out.println("REST ** LEAVE");
         String innChoice = scanner.nextLine();
         if (innChoice.startsWith("R") || innChoice.startsWith("r")) {
-            chooseClass.rest(chooseClass);
+            chooseDifficulty.rest(chooseDifficulty);
         }else{
-            exploreTown(chooseClass);
+            exploreTown(chooseDifficulty);
         }
         return innChoice;
     }
@@ -244,7 +276,7 @@ public class HeroRPG {
         System.out.println("Your max health is " + chooseDifficulty.getMaxHealth());
         System.out.println("Your health is currently: " + chooseDifficulty.getHealth());
         System.out.println("You have a damage amount of " + chooseDifficulty.getAttack());
-        System.out.println("You currently have " + chooseDifficulty.getPotionNum() + " potions");
+//        System.out.println("You currently have " + chooseDifficulty.countPotion() + " potions");
         System.out.println("You currently have " + chooseDifficulty.getCurrency() + " gold coins");
     }
 
@@ -269,6 +301,7 @@ public class HeroRPG {
             return new Warrior(userName);
         }else {
             System.out.println("Select a valid role");
+            chooseClass(userRole, userName);
         }
         return null;
     }

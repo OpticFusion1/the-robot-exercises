@@ -1,4 +1,7 @@
 package RPG;
+
+import java.util.Scanner;
+
 public class Enemy {
     private static String name;
     private static int maxHealth;
@@ -18,27 +21,27 @@ public class Enemy {
     }
 
 
-        static void enemyAttack(Character chooseClass){
-        int randomNum = (int) (Math.random() * 6);
+    static void enemyAttack(Character chooseDifficulty){
+    int randomNum = (int) (Math.random() * 6);
+    System.out.println();
+    if (randomNum == 0 || randomNum == 2 || randomNum == 3 || randomNum == 5) {
         System.out.println();
-        if (randomNum == 0 || randomNum == 2 || randomNum == 3 || randomNum == 5) {
-            System.out.println();
-            System.out.println("** " + Enemy.getName() + " hit " + chooseClass.getName() + " for " + Enemy.getAttack() + " **");
-            chooseClass.setHealth(chooseClass.getHealth() - Enemy.getAttack());
-            System.out.println(chooseClass.getName() + "'s health is now at " + chooseClass.getHealth());
-        } else if (randomNum == 4) {
-            System.out.println("** " + Enemy.getName() + " hit " + chooseClass.getName() + " for a critical attack of " + Enemy.getAttack() * 2 + " **");
-            chooseClass.setHealth(chooseClass.getHealth() - (Enemy.getAttack() * 2));
-            System.out.println(chooseClass.getName() + "'s health is now at " + chooseClass.getHealth());
-        } else if (randomNum == 1) {
-            System.out.println("** " + chooseClass.getName() + " dodged the attack! **");
-            System.out.println(chooseClass.getName() + "'s health is still at " + chooseClass.getHealth());
-        }
-        chooseClass.checkHealth(chooseClass);
-        chooseClass.battleChoices(chooseClass);
+        System.out.println("** " + Enemy.getName() + " hit " + chooseDifficulty.getName() + " for " + Enemy.getAttack() + " **");
+        chooseDifficulty.setHealth(chooseDifficulty.getHealth() - Enemy.getAttack());
+        System.out.println(chooseDifficulty.getName() + "'s health is now at " + chooseDifficulty.getHealth());
+    } else if (randomNum == 4) {
+        System.out.println("** " + Enemy.getName() + " hit " + chooseDifficulty.getName() + " for a critical attack of " + Enemy.getAttack() * 2 + " **");
+        chooseDifficulty.setHealth(chooseDifficulty.getHealth() - (Enemy.getAttack() * 2));
+        System.out.println(chooseDifficulty.getName() + "'s health is now at " + chooseDifficulty.getHealth());
+    } else if (randomNum == 1) {
+        System.out.println("** " + chooseDifficulty.getName() + " dodged the attack! **");
+        System.out.println(chooseDifficulty.getName() + "'s health is still at " + chooseDifficulty.getHealth());
     }
+    chooseDifficulty.checkHealth(chooseDifficulty);
+    chooseDifficulty.battleChoices(chooseDifficulty);
+}
 
-         static void enemyHeal(Character chooseClass){
+    static void enemyHeal(Character chooseDifficulty){
             int randomNum = (int) (Math.random() * 2);
             if(randomNum == 0 && Enemy.getHealth() <= 10 && Enemy.getPotionNum() > 0){
                 Enemy.setPotionNum(Enemy.getPotionNum() - 1);
@@ -47,11 +50,32 @@ public class Enemy {
                 System.out.println(Enemy.getName() + " used heal.");
                 System.out.println(Enemy.getName() + " has been healed for " + Enemy.getPotionStrength());
                 System.out.println(Enemy.getName() + "'s health is now at " + Enemy.getHealth());
-                chooseClass.checkHealth(chooseClass);
-                chooseClass.battleChoices(chooseClass);
+                chooseDifficulty.checkHealth(chooseDifficulty);
+                chooseDifficulty.battleChoices(chooseDifficulty);
             }else {
-            enemyAttack(chooseClass);
+            chooseDifficulty.checkHealth(chooseDifficulty);
+            enemyAttack(chooseDifficulty);
         }
+    }
+
+    static String battleTroll(Character chooseDifficulty) {
+        Enemy troll = new Enemy("Troll", 25, 25, 5, 3, 5);
+        Scanner playRiddle = new Scanner(System.in);
+        System.out.println("Troll: Greetings, hero!  I see you are wanting to pass through this cave.");
+        System.out.println("Troll: If you can answer three riddles correctly, then I will let you pass.");
+        System.out.println("Troll: If you fail, however, then I eat you.");
+        System.out.println("Troll: Deal?");
+        System.out.println("Y/N");
+        String riddleChoice = playRiddle.nextLine();
+        if(riddleChoice.startsWith("y") || riddleChoice.startsWith("Y")){
+            HeroRPG.giveRiddles(chooseDifficulty);
+        }else {
+            System.out.println("Troll: Aw you are no fun.  Killing you will be fun.");
+            chooseDifficulty.battleChoices(chooseDifficulty);
+        }
+        System.out.println();
+        return riddleChoice;
+
     }
 
 
